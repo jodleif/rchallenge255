@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <array>
 #include <cinttypes>
 namespace bmp {
 	std::array<char, 2> short_to_arr(unsigned short sh);
-	std::array<char, 4>  int_to_arr(unsigned int in);
+	std::array<char, 4> int_to_arr(unsigned int in);
 	
 #pragma pack(push,1)
 	typedef struct BITMAPFILEHEADER
@@ -45,7 +46,7 @@ namespace bmp {
 		void print_headerinfo() const;
 		int nof_blackpixles() const;
 		uint64_t nof_blackpixles_accumulate() const;
-		int get_radius() const;
+		long double get_radius() const;
 		// public vars
 		pHeader header;
 		pInfoheader info_header;

@@ -2,69 +2,12 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <array>
 #include <cassert>
-#include <algorithm>
 #include <numeric>
 
 
 namespace bmp
 {
-
-	/*
-	void load_and_print_bmp_info(std::string filename)
-	{
-
-
-		std::ifstream bmp_file(filename.c_str());
-		if (bmp_file) {
-			bmp_file.seekg(0, std::ios::end);
-			std::streampos length = bmp_file.tellg();
-			bmp_file.seekg(0, std::ios::beg);
-
-			std::vector<char> buffer(length);
-			bmp_file.read(&buffer[0], length);
-			file_header = reinterpret_cast<pHeader>(&buffer[0]);
-			info_header = reinterpret_cast<pInfoheader>(&buffer[0] + sizeof(BITMAPFILEHEADER));
-
-
-			// Print diag:
-
-//			std::array<char, 2u> arr{ file_header->Signature, file_header->Signature >> 8};B
-			int white{0};
-			int black{ 0 };
-			int pixels{ 0 };
-			auto iter = buffer.begin();
-			iter = iter + file_header->fOffset;
-			std::vector<int> blackLines;
-			auto lines{ 0 };
-			for (auto i = 0u;i < (info_header->Width*info_header->Height)*3;i+=3) {
-				if(*(iter+i)==static_cast<char>(0)) {
-					++black;
-				} else {
-					++white;
-				}
-				++pixels;
-				if(pixels==info_header->Width) {
-					pixels = 0;
-					blackLines.push_back(black - vector_sum(blackLines));
-					++lines;
-				}
-			}
-			auto most = std::max_element(blackLines.begin(), blackLines.end());
-			std::cout << "most blacks " << *most << std::endl;
-			std::cout << "Lines: " << lines << std::endl;
-			std::cout << "Black: " << black;
-			std::cout << "White: " << white << std::endl;
-			std::cout << "Total pixels: " << pixels << " height*width: " << (info_header->Height*info_header->Width) << std::endl;
-			double area = static_cast<double>(black);
-			double r2 = static_cast<double>((*most/ 2)*(*most/ 2));
-			std::cout << "PI: " << area / r2 << std::endl;
-
-
-		}
-	}
-	*/
 
 	std::array<char, 2> short_to_arr(unsigned short sh)
 	{
@@ -75,19 +18,6 @@ namespace bmp
 	{
 		return std::array<char, 4u> {static_cast<char>(in), static_cast<char>(in >> 8), static_cast<char>(in >> 16), static_cast<char>(in >> 24)};
 	}
-	/* USE std::accumulate
-	int vector_sum(const std::vector<int>& vec)
-	{
-		auto res{ 0 };
-		if(vec.size()!=0) {
-		for(auto i : vec) {
-			res += i;
-		}
-}
-		return res;
-	}*/
-
-
 
 	void bmp_header::load_bitmap(const std::string filename)
 	{
@@ -136,8 +66,8 @@ namespace bmp
 
 	int bmp_header::nof_blackpixles() const
 	{
-		auto black{ 0 };
-		auto white{ 0 };
+		int black{ 0 };
+		int white{ 0 };
 
 		auto vec_iter = raw_data.cbegin();
 		vec_iter += header->fOffset;
@@ -167,9 +97,9 @@ namespace bmp
 		return (total_pixles-accu);
 	}
 
-	int bmp_header::get_radius() const
+	long double bmp_header::get_radius() const
 	{
-		return info_header->Width / 2;
+		return (info_header->Width / 2.0L);
 	}
 }
 

@@ -19,7 +19,7 @@ int main()
 	bitmap.print_headerinfo();
 	//std::cout << "Black pixles: " << bitmap.nof_blackpixles() << std::endl;
 	//std::cout << "Black pixles: (accumulate) " << bitmap.nof_blackpixles_accumulate() << std::endl;
-	std::cout << "Pi ~ " << static_cast<long double>(bitmap.nof_blackpixles_accumulate() /static_cast<long double>( bitmap.get_radius()*bitmap.get_radius())) << std::endl;
+	std::cout << "Pi ~ " << (bitmap.nof_blackpixles_accumulate() /( bitmap.get_radius()*bitmap.get_radius())) << std::endl;
 	tools::waitforkeypress();
 	return 0;
 }
