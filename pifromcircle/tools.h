@@ -1,0 +1,3 @@
+namespace tools {
+	void waitforkeypress();
+}
