@@ -166,6 +166,11 @@ namespace bmp
 		uint64_t total_pixles{ static_cast<uint64_t>(info_header->Width*info_header->Height) };
 		return (total_pixles-accu);
 	}
+
+	int bmp_header::get_radius() const
+	{
+		return info_header->Width / 2;
+	}
 }
 
 
